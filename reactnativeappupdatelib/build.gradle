@@ -41,15 +41,14 @@ dependencies {
 }
 
 afterEvaluate {
-    publishing{
-        publications{
-            release(MavenPublication){
+    publishing {
+        publications {
+            release(MavenPublication) {
                 from components.release
-                groupId = 'com.github.rushitalogicwind'
-                artifectId = 'reactnativeappupdatelib'
+                groupId = 'com.github.philipplackner'
+                artifactId = 'reactnativeappupdatelib'
                 version = '1.0'
             }
-
         }
     }
 }

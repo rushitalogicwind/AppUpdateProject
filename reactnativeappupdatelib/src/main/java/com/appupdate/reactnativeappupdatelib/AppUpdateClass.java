@@ -37,6 +37,7 @@ public class AppUpdateClass {
 
 
     public static void checkForAppUpdate(ReactApplicationContext reactContext,com.facebook.react.bridge.Callback callback) {
+        Log.d("AAAA", AppUpdateClass.appId);
         ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(Network network) {
