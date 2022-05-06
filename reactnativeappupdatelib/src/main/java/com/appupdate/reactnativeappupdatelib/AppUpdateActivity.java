@@ -17,10 +17,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class AppUpdateActivity extends Activity {
+public class AppUpdateActivity extends AppCompatActivity {
 
     Boolean activityClose = false;
 
