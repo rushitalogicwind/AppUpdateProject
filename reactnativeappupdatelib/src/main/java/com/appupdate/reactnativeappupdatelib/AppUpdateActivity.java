@@ -60,6 +60,45 @@ public class AppUpdateActivity extends AppCompatActivity {
             ImageView img_icon = customLayout.findViewById(R.id.img_icon);
             TextView txt_app_name = customLayout.findViewById(R.id.txt_app_name);
 
+            if ((isAndroidForcedUpdate || isAndroidUpdate) && (isUpdate)) {
+                update_layout.setVisibility(View.VISIBLE);
+                maintenance_layout.setVisibility(View.GONE);
+                txt_app_name.setVisibility(View.GONE);
+                TextView txt_title = customLayout.findViewById(R.id.txt_title);
+                TextView txt_des = customLayout.findViewById(R.id.txt_des);
+                TextView txt_no_thanks = customLayout.findViewById(R.id.txt_no_thanks);
+                Button btn_update = customLayout.findViewById(R.id.btn_update);
+                img_icon.setImageResource(icon);
+                txt_title.setText(name + " " + getString(R.string.update_title));
+                if(isAndroidForcedUpdate){
+                    txt_no_thanks.setVisibility(View.GONE);
+                    txt_des.setText(getString(R.string.update_force_dsc));
+                } else{
+                    txt_no_thanks.setVisibility(View.VISIBLE);
+                    txt_des.setText(getString(R.string.update_dsc));
+                    txt_no_thanks.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            activityClose = true;
+                            onBackPressed();
+                            alertDialog.dismiss();
+                        }
+                    });
+
+                }
+                btn_update.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        activityClose = true;
+                        onBackPressed();
+                        String uri = "https://play.google.com/store/apps/details?id=" + info.packageName;
+                        Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                        startActivity(marketIntent);
+                        alertDialog.dismiss();
+                    }
+                });
+            }
+
             if(isMaintenance){
                 update_layout.setVisibility(View.GONE);
                 maintenance_layout.setVisibility(View.VISIBLE);
@@ -99,45 +138,6 @@ public class AppUpdateActivity extends AppCompatActivity {
                     txt_title_maintain.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     txt_title_maintain.setGravity(Gravity.CENTER);
                 }
-            }
-
-            if ((isAndroidForcedUpdate || isAndroidUpdate) && (isUpdate)) {
-                update_layout.setVisibility(View.VISIBLE);
-                maintenance_layout.setVisibility(View.GONE);
-                txt_app_name.setVisibility(View.GONE);
-                TextView txt_title = customLayout.findViewById(R.id.txt_title);
-                TextView txt_des = customLayout.findViewById(R.id.txt_des);
-                TextView txt_no_thanks = customLayout.findViewById(R.id.txt_no_thanks);
-                Button btn_update = customLayout.findViewById(R.id.btn_update);
-                img_icon.setImageResource(icon);
-                txt_title.setText(name + " " + getString(R.string.update_title));
-                if(isAndroidForcedUpdate){
-                    txt_no_thanks.setVisibility(View.GONE);
-                    txt_des.setText(getString(R.string.update_force_dsc));
-                } else{
-                    txt_no_thanks.setVisibility(View.VISIBLE);
-                    txt_des.setText(getString(R.string.update_dsc));
-                    txt_no_thanks.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            activityClose = true;
-                            onBackPressed();
-                            alertDialog.dismiss();
-                        }
-                    });
-
-                }
-                btn_update.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        activityClose = true;
-                        onBackPressed();
-                        String uri = "https://play.google.com/store/apps/details?id=" + info.packageName;
-                        Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                        startActivity(marketIntent);
-                        alertDialog.dismiss();
-                    }
-                });
             }
             alertDialog.show();
 
