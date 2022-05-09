@@ -46,7 +46,10 @@ public class AppUpdateActivity extends AppCompatActivity {
             String  androidBuildNumber= updateData.getString("androidBuildNumber");
             PackageInfo info = getApplicationContext().getPackageManager().getPackageInfo(getPackageName(), 0);
             int versionCode = info.versionCode;
-            int buildNum = Integer.parseInt(androidBuildNumber);
+            int buildNum = 0;
+            if((androidBuildNumber.equals(null))){
+                buildNum =  Integer.parseInt(androidBuildNumber);
+            }
             boolean isUpdate = versionCode < buildNum;
 
             AlertDialog alertDialog = new AlertDialog.Builder(this).setCancelable(false).create();

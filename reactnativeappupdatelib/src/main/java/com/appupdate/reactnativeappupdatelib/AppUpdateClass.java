@@ -37,12 +37,10 @@ public class AppUpdateClass {
 
 
     public static void checkForAppUpdate(ReactApplicationContext reactContext,com.facebook.react.bridge.Callback callback) {
-        Log.d("AAAA", AppUpdateClass.appId);
         ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(Network network) {
                 String url = BASE_URL+ AppUpdateClass.appId;
-                Log.d("RRR", url);
                 OkHttpClient client = new OkHttpClient().newBuilder()
                         .build();
                 Request request = new Request.Builder()
@@ -66,9 +64,12 @@ public class AppUpdateClass {
                                 String  androidBuildNumber= updateData.getString("androidBuildNumber");
                                 PackageInfo info = reactContext.getPackageManager().getPackageInfo(reactContext.getPackageName(), 0);
                                 int versionCode = info.versionCode;
-                                int buildNum = Integer.parseInt(androidBuildNumber);
+                                int buildNum = 0;
+                                if((androidBuildNumber.equals(null))){
+                                    buildNum =  Integer.parseInt(androidBuildNumber);
+                                }
                                 boolean isUpdate = versionCode < buildNum;
-                                Log.d("SSSS", String.valueOf(isUpdate));
+
 
                                 if (isNativeUIShow && (isUpdate || isMaintenance)){
 
