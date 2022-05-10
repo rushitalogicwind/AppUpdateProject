@@ -31,6 +31,7 @@ public class AppUpdateClass {
     static String appId;
     static Boolean isNativeUIShow;
     public static void setAppId(String appId, boolean isNativeUIShow) {
+        Log.d("DD", appId + ","+  isNativeUIShow);
         AppUpdateClass.appId = appId;
         AppUpdateClass.isNativeUIShow = isNativeUIShow;
     }
