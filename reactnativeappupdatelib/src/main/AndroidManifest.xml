@@ -3,7 +3,11 @@
     package="com.appupdate.reactnativeappupdatelib">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application>
+        <activity
+            android:name=".MaintenanceActivity"
+            android:exported="false" />
         <activity
             android:name=".AppUpdateActivity"
             android:exported="false" />

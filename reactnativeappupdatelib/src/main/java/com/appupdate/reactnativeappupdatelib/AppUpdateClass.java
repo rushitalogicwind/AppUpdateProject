@@ -31,7 +31,6 @@ public class AppUpdateClass {
     static String appId;
     static Boolean isNativeUIShow;
     public static void setAppId(String appId, boolean isNativeUIShow) {
-        Log.d("DD", appId + ","+  isNativeUIShow);
         AppUpdateClass.appId = appId;
         AppUpdateClass.isNativeUIShow = isNativeUIShow;
     }
@@ -60,21 +59,26 @@ public class AppUpdateClass {
                             if(response.code() == 200){
                                 String myResponse = response.body().string();
                                 JSONObject jsonObject = new JSONObject(myResponse);
-                                Boolean isMaintenance = jsonObject.getBoolean("isMaintenance");
                                 JSONObject updateData = jsonObject.getJSONObject("updateData");
+                                Boolean isAndroidForcedUpdate = updateData.getBoolean("isAndroidForcedUpdate");
+                                Boolean isAndroidUpdate = updateData.getBoolean("isAndroidUpdate");
                                 String  androidBuildNumber= updateData.getString("androidBuildNumber");
                                 PackageInfo info = reactContext.getPackageManager().getPackageInfo(reactContext.getPackageName(), 0);
                                 int versionCode = info.versionCode;
                                 int buildNum = 0;
-                                if((androidBuildNumber.equals(null))){
+
+                                if(!(androidBuildNumber.equals(null))){
                                     buildNum =  Integer.parseInt(androidBuildNumber);
                                 }
                                 boolean isUpdate = versionCode < buildNum;
-
-
-                                if (isNativeUIShow && (isUpdate || isMaintenance)){
-
+                                Boolean isMaintenance = jsonObject.getBoolean("isMaintenance");
+                                if (isNativeUIShow && isUpdate && (isAndroidForcedUpdate || isAndroidUpdate)){
                                     Intent intent = new Intent(reactContext, AppUpdateActivity.class);
+                                    intent.putExtra("res", myResponse);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    reactContext.startActivity(intent);
+                                }else if(isNativeUIShow && isMaintenance){
+                                    Intent intent = new Intent(reactContext, MaintenanceActivity.class);
                                     intent.putExtra("res", myResponse);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     reactContext.startActivity(intent);
