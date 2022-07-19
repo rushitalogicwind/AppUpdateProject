@@ -27,7 +27,7 @@ import okhttp3.Response;
 
 public class AppUpdateClass {
 
-    static String BASE_URL = "https://server-dev.appsonair.com/v1/app-services/";
+    static String BASE_URL = "https://server.dev.appsonair.com/v1/app-services/";
     static String appId;
     static Boolean isNativeUIShow;
     public static void setAppId(String appId, boolean isNativeUIShow) {
