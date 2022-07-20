@@ -1,19 +1,15 @@
 package com.appupdate.reactnativeappupdatelib;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,6 +40,7 @@ public class AppUpdateActivity extends AppCompatActivity {
             Boolean isAndroidForcedUpdate = updateData.getBoolean("isAndroidForcedUpdate");
             Boolean isAndroidUpdate = updateData.getBoolean("isAndroidUpdate");
             String  androidBuildNumber= updateData.getString("androidBuildNumber");
+            String  playStoreURL= updateData.getString("androidUpdateLink");
             PackageInfo info = getApplicationContext().getPackageManager().getPackageInfo(getPackageName(), 0);
             int versionCode = info.versionCode;
             int buildNum = 0;
@@ -52,19 +49,17 @@ public class AppUpdateActivity extends AppCompatActivity {
                 buildNum =  Integer.parseInt(androidBuildNumber);
             }
             boolean isUpdate = versionCode < buildNum;
-            Log.d("isUpdate", String.valueOf(isUpdate));
 
             AlertDialog alertDialog = new AlertDialog.Builder(this).setCancelable(false).create();
             View customLayout = getLayoutInflater().inflate(R.layout.activity_app_update, null);
             alertDialog.setView(customLayout);
-            LinearLayout update_layout = customLayout.findViewById(R.id.update_layout);
             ImageView img_icon = customLayout.findViewById(R.id.img_icon);
 
             if ((isAndroidForcedUpdate || isAndroidUpdate) && (isUpdate)) {
                 TextView txt_title = customLayout.findViewById(R.id.txt_title);
                 TextView txt_des = customLayout.findViewById(R.id.txt_des);
                 TextView txt_no_thanks = customLayout.findViewById(R.id.txt_no_thanks);
-                Button btn_update = customLayout.findViewById(R.id.btn_update);
+                TextView btn_update = customLayout.findViewById(R.id.btn_update);
                 img_icon.setImageResource(icon);
                 txt_title.setText(name + " " + getString(R.string.update_title));
                 if(isAndroidForcedUpdate){
@@ -86,12 +81,15 @@ public class AppUpdateActivity extends AppCompatActivity {
                 btn_update.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        activityClose = true;
-                        onBackPressed();
-                        String uri = "https://play.google.com/store/apps/details?id=" + info.packageName;
-                        Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                        if(!isAndroidForcedUpdate){
+                            activityClose = true;
+                            onBackPressed();
+                        }
+                        Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(playStoreURL));
                         startActivity(marketIntent);
-                        alertDialog.dismiss();
+                        if(!isAndroidForcedUpdate){
+                            alertDialog.dismiss();
+                        }
                     }
                 });
             }

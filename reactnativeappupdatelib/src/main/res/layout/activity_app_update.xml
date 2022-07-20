@@ -66,19 +66,22 @@
                 android:fontFamily="@font/inter_regular"
                 android:text="@string/btn_no_thanks"
                 android:textColor="@color/text_color"
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:visibility="gone" />
 
-            <Button
+            <TextView
                 android:id="@+id/btn_update"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button"
                 android:fontFamily="@font/inter_regular"
                 android:text="Update"
+                android:paddingVertical="5dp"
+                android:textAlignment="center"
+                android:paddingHorizontal="20dp"
                 android:textAllCaps="false"
                 android:textColor="@color/button_text_color"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

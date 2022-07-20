@@ -17,8 +17,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AppUpdateClass.setAppId("2f94b314-9626-4fb7-aa29-3dd2e7d54de3", true);
-//
-//        AppUpdateClass.checkForAppUpdate(reactApplicationContext, callback);
+        AppUpdateClass.setAppId("86f3fe02-59ff-4ce4-a002-06b281e20ee1", true);
+//        AppUpdateClass.checkForAppUpdate(this, callback);
     }
 }
