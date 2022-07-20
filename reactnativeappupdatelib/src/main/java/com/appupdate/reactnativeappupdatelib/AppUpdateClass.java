@@ -18,6 +18,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import org.json.JSONObject;
 
 import java.io.IOException;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -30,17 +31,18 @@ public class AppUpdateClass {
     static String BASE_URL = "https://server.dev.appsonair.com/v1/app-services/";
     static String appId;
     static Boolean isNativeUIShow;
+
     public static void setAppId(String appId, boolean isNativeUIShow) {
         AppUpdateClass.appId = appId;
         AppUpdateClass.isNativeUIShow = isNativeUIShow;
     }
 
 
-    public static void checkForAppUpdate(ReactApplicationContext reactContext,com.facebook.react.bridge.Callback callback) {
+    public static void checkForAppUpdate(ReactApplicationContext reactContext, com.facebook.react.bridge.Callback callback) {
         ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(Network network) {
-                String url = BASE_URL+ AppUpdateClass.appId;
+                String url = BASE_URL + AppUpdateClass.appId;
                 OkHttpClient client = new OkHttpClient().newBuilder()
                         .build();
                 Request request = new Request.Builder()
@@ -56,34 +58,35 @@ public class AppUpdateClass {
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) {
                         try {
-                            if(response.code() == 200){
+                            if (response.code() == 200) {
                                 String myResponse = response.body().string();
                                 JSONObject jsonObject = new JSONObject(myResponse);
                                 JSONObject updateData = jsonObject.getJSONObject("updateData");
-                                Boolean isAndroidForcedUpdate = updateData.getBoolean("isAndroidForcedUpdate");
-                                Boolean isAndroidUpdate = updateData.getBoolean("isAndroidUpdate");
-                                String  androidBuildNumber= updateData.getString("androidBuildNumber");
-                                PackageInfo info = reactContext.getPackageManager().getPackageInfo(reactContext.getPackageName(), 0);
-                                int versionCode = info.versionCode;
-                                int buildNum = 0;
+                                boolean isAndroidUpdate = updateData.getBoolean("isAndroidUpdate");
+                                if (isAndroidUpdate) {
+                                    boolean isAndroidForcedUpdate = updateData.getBoolean("isAndroidForcedUpdate");
+                                    String androidBuildNumber = updateData.getString("androidBuildNumber");
+                                    PackageInfo info = reactContext.getPackageManager().getPackageInfo(reactContext.getPackageName(), 0);
+                                    int versionCode = info.versionCode;
+                                    int buildNum = 0;
 
-                                if(!(androidBuildNumber.equals(null))){
-                                    buildNum =  Integer.parseInt(androidBuildNumber);
+                                    if (!(androidBuildNumber.equals(null))) {
+                                        buildNum = Integer.parseInt(androidBuildNumber);
+                                    }
+                                    boolean isUpdate = versionCode < buildNum;
+                                    Boolean isMaintenance = jsonObject.getBoolean("isMaintenance");
+                                    if (isNativeUIShow && isUpdate && (isAndroidForcedUpdate || isAndroidUpdate)) {
+                                        Intent intent = new Intent(reactContext, AppUpdateActivity.class);
+                                        intent.putExtra("res", myResponse);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        reactContext.startActivity(intent);
+                                    } else if (isNativeUIShow && isMaintenance) {
+                                        Intent intent = new Intent(reactContext, MaintenanceActivity.class);
+                                        intent.putExtra("res", myResponse);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        reactContext.startActivity(intent);
+                                    }
                                 }
-                                boolean isUpdate = versionCode < buildNum;
-                                Boolean isMaintenance = jsonObject.getBoolean("isMaintenance");
-                                if (isNativeUIShow && isUpdate && (isAndroidForcedUpdate || isAndroidUpdate)){
-                                    Intent intent = new Intent(reactContext, AppUpdateActivity.class);
-                                    intent.putExtra("res", myResponse);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    reactContext.startActivity(intent);
-                                }else if(isNativeUIShow && isMaintenance){
-                                    Intent intent = new Intent(reactContext, MaintenanceActivity.class);
-                                    intent.putExtra("res", myResponse);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    reactContext.startActivity(intent);
-                                }
-
                                 callback.invoke(myResponse);
                             }
 
