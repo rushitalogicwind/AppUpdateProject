@@ -1,23 +1,32 @@
 package com.appupdate.appupdateproject;
 
-import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.appupdate.reactnativeappupdatelib.AppUpdateClass;
-import com.facebook.react.bridge.Callback;
-import com.facebook.react.bridge.ReactApplicationContext;
+import com.appupdate.reactnativeappupdatelib.UpdateCallBack;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
-    ReactApplicationContext reactApplicationContext;
-    Callback callback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         AppUpdateClass.setAppId("86f3fe02-59ff-4ce4-a002-06b281e20ee1", true);
-//        AppUpdateClass.checkForAppUpdate(this, callback);
+        AppUpdateClass.checkForAppUpdate(this, new UpdateCallBack() {
+            @Override
+            public void onSuccess(String response) {
+                Log.e("mye", ""+response);
+            }
+
+            @Override
+            public void onFailure(String message) {
+                Log.e("mye", "onFailure"+message);
+
+            }
+        });
     }
 }

@@ -3,8 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="reactnativeappupdatelib/src/main/res/drawable/border.xml" value="0.9516668090820313" />
         <entry key="reactnativeappupdatelib/src/main/res/drawable/button.xml" value="0.24153846153846154" />
-        <entry key="reactnativeappupdatelib/src/main/res/layout/activity_app_update.xml" value="0.27160135904947913" />
+        <entry key="reactnativeappupdatelib/src/main/res/layout/activity_app_update.xml" value="0.16997528076171875" />
         <entry key="reactnativeappupdatelib/src/main/res/layout/activity_maintenance.xml" value="0.1962549845377604" />
       </map>
     </option>
@@ -14,5 +15,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.199432373046875" />
+      </ProjectState>
+    </option>
   </component>
 </project>

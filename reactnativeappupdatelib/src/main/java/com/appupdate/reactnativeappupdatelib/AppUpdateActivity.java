@@ -27,6 +27,7 @@ public class AppUpdateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_app_update);
         try {
             ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle1 = ai.metaData;
@@ -50,16 +51,16 @@ public class AppUpdateActivity extends AppCompatActivity {
             }
             boolean isUpdate = versionCode < buildNum;
 
-            AlertDialog alertDialog = new AlertDialog.Builder(this).setCancelable(false).create();
-            View customLayout = getLayoutInflater().inflate(R.layout.activity_app_update, null);
-            alertDialog.setView(customLayout);
-            ImageView img_icon = customLayout.findViewById(R.id.img_icon);
+//            AlertDialog alertDialog = new AlertDialog.Builder(this).setCancelable(false).create();
+//            View customLayout = getLayoutInflater().inflate(R.layout.activity_app_update, null);
+//            alertDialog.setView(customLayout);
+            ImageView img_icon = findViewById(R.id.img_icon);
 
             if ((isAndroidForcedUpdate || isAndroidUpdate) && (isUpdate)) {
-                TextView txt_title = customLayout.findViewById(R.id.txt_title);
-                TextView txt_des = customLayout.findViewById(R.id.txt_des);
-                TextView txt_no_thanks = customLayout.findViewById(R.id.txt_no_thanks);
-                TextView btn_update = customLayout.findViewById(R.id.btn_update);
+                TextView txt_title = findViewById(R.id.txt_title);
+                TextView txt_des = findViewById(R.id.txt_des);
+                TextView txt_no_thanks = findViewById(R.id.txt_no_thanks);
+                TextView btn_update = findViewById(R.id.btn_update);
                 img_icon.setImageResource(icon);
                 txt_title.setText(name + " " + getString(R.string.update_title));
                 if(isAndroidForcedUpdate){
@@ -73,7 +74,7 @@ public class AppUpdateActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             activityClose = true;
                             onBackPressed();
-                            alertDialog.dismiss();
+//                            alertDialog.dismiss();
                         }
                     });
 
@@ -88,13 +89,13 @@ public class AppUpdateActivity extends AppCompatActivity {
                         Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(playStoreURL));
                         startActivity(marketIntent);
                         if(!isAndroidForcedUpdate){
-                            alertDialog.dismiss();
+//                            alertDialog.dismiss();
                         }
                     }
                 });
             }
 
-            alertDialog.show();
+//            alertDialog.show();
 
         } catch (JSONException | PackageManager.NameNotFoundException e) {
             e.printStackTrace();

@@ -13,7 +13,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.facebook.react.bridge.ReactApplicationContext;
 
 import org.json.JSONObject;
 
@@ -38,7 +37,7 @@ public class AppUpdateClass {
     }
 
 
-    public static void checkForAppUpdate(ReactApplicationContext reactContext, com.facebook.react.bridge.Callback callback) {
+    public static void checkForAppUpdate(Context context, UpdateCallBack callback) {
         ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(Network network) {
@@ -67,7 +66,7 @@ public class AppUpdateClass {
                                 if (isAndroidUpdate) {
                                     boolean isAndroidForcedUpdate = updateData.getBoolean("isAndroidForcedUpdate");
                                     String androidBuildNumber = updateData.getString("androidBuildNumber");
-                                    PackageInfo info = reactContext.getPackageManager().getPackageInfo(reactContext.getPackageName(), 0);
+                                    PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
                                     int versionCode = info.versionCode;
                                     int buildNum = 0;
 
@@ -76,25 +75,25 @@ public class AppUpdateClass {
                                     }
                                     boolean isUpdate = versionCode < buildNum;
                                     if (isNativeUIShow && isUpdate && (isAndroidForcedUpdate || isAndroidUpdate)) {
-                                        Intent intent = new Intent(reactContext, AppUpdateActivity.class);
+                                        Intent intent = new Intent(context, AppUpdateActivity.class);
                                         intent.putExtra("res", myResponse);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        reactContext.startActivity(intent);
+                                        context.startActivity(intent);
                                     }
                                 } else if (isMaintenance && isNativeUIShow) {
-                                    Intent intent = new Intent(reactContext, MaintenanceActivity.class);
+                                    Intent intent = new Intent(context, MaintenanceActivity.class);
                                     intent.putExtra("res", myResponse);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    reactContext.startActivity(intent);
+                                    context.startActivity(intent);
                                 } else {
                                     //TODO : There is No Update and No Maintenance.
                                 }
-                                callback.invoke(myResponse);
+                                callback.onSuccess(myResponse);
                             }
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                            callback.invoke(e.getMessage());
+                            callback.onFailure(e.getMessage());
                             Log.d("AAAA", String.valueOf(e.getMessage()));
 
                         }
@@ -109,7 +108,7 @@ public class AppUpdateClass {
         };
 
         ConnectivityManager connectivityManager =
-                (ConnectivityManager) reactContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             connectivityManager.registerDefaultNetworkCallback(networkCallback);
