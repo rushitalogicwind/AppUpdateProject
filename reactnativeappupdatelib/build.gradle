@@ -45,7 +45,7 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
-                groupId = 'com.github.rushitalogicwind'
+                groupId = 'org.bitbucket.rushitalogicwind'
                 artifactId = 'reactnativeappupdatelib'
                 version = '5.0'
             }
