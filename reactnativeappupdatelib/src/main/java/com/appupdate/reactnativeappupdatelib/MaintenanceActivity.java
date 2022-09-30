@@ -2,6 +2,8 @@ package com.appupdate.reactnativeappupdatelib;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +41,7 @@ public class MaintenanceActivity extends AppCompatActivity {
                 ImageView img_icon = findViewById(R.id.img_icon);
                 TextView txt_title_maintain = findViewById(R.id.txt_title_maintain);
                 TextView txt_des_maintain = findViewById(R.id.txt_des_maintain);
+                TextView txt_app_name = findViewById(R.id.txt_app_name);
 
                 if (image != "") {
                     new DownloadImageTask(img_icon)
@@ -48,9 +51,14 @@ public class MaintenanceActivity extends AppCompatActivity {
                 txt_title_maintain.setText(title);
                 txt_des_maintain.setText(description);
 
+                ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+                Bundle bundle1 = ai.metaData;
+                String appName = bundle1.getString("com.appupdate.name");
+                txt_app_name.setText(appName);
                 if (textColorCode != "") {
                     txt_title_maintain.setTextColor(Color.parseColor(textColorCode));
                     txt_des_maintain.setTextColor(Color.parseColor(textColorCode));
+                    txt_app_name.setTextColor(Color.parseColor(textColorCode));
                 }
             }
 

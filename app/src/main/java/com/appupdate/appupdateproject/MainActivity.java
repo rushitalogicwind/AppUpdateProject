@@ -15,7 +15,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AppUpdateClass.setAppId("86f3fe02-59ff-4ce4-a002-06b281e20ee1", true);
+        AppUpdateClass.setAppId("eafde253-9b4e-49af-ae2d-af98db4bb67a", true);
         AppUpdateClass.checkForAppUpdate(this, new UpdateCallBack() {
             @Override
             public void onSuccess(String response) {
