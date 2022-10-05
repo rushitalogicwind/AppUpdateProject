@@ -1,6 +1,5 @@
 package com.appupdate.reactnativeappupdatelib;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -19,21 +18,20 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class AppUpdateClass {
+public class AppsonairServices {
 
     static String BASE_URL = "https://server.dev.appsonair.com/v1/app-services/";
     static String appId;
     static Boolean isNativeUIShow;
 
     public static void setAppId(String appId, boolean isNativeUIShow) {
-        AppUpdateClass.appId = appId;
-        AppUpdateClass.isNativeUIShow = isNativeUIShow;
+        AppsonairServices.appId = appId;
+        AppsonairServices.isNativeUIShow = isNativeUIShow;
     }
 
 
@@ -41,7 +39,7 @@ public class AppUpdateClass {
         ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(Network network) {
-                String url = BASE_URL + AppUpdateClass.appId;
+                String url = BASE_URL + AppsonairServices.appId;
                 OkHttpClient client = new OkHttpClient().newBuilder()
                         .build();
                 Request request = new Request.Builder()
