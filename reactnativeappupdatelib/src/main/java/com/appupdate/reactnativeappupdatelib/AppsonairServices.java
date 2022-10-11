@@ -38,7 +38,7 @@ public class AppsonairServices {
         ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(Network network) {
-                String url =  BuildConfig.API_URL + AppsonairServices.appId;
+                String url =  BuildConfig.Base_URL + AppsonairServices.appId;
                 OkHttpClient client = new OkHttpClient().newBuilder()
                         .build();
                 Request request = new Request.Builder()
