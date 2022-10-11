@@ -25,7 +25,6 @@ import okhttp3.Response;
 
 public class AppsonairServices {
 
-    static String BASE_URL = "https://server.dev.appsonair.com/v1/app-services/";
     static String appId;
     static Boolean isNativeUIShow;
 
@@ -39,7 +38,7 @@ public class AppsonairServices {
         ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(Network network) {
-                String url = BASE_URL + AppsonairServices.appId;
+                String url =  BuildConfig.API_URL + AppsonairServices.appId;
                 OkHttpClient client = new OkHttpClient().newBuilder()
                         .build();
                 Request request = new Request.Builder()

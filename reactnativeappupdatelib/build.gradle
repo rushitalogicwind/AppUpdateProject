@@ -11,7 +11,9 @@ android {
         targetSdk 30
         versionCode 1
         versionName "1.0"
-
+        buildTypes {
+            buildConfigField "String", "API_URL", "\"https://server.dev.appsonair.com/v1/app-services/\""
+        }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
