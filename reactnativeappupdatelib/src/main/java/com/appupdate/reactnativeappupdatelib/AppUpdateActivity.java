@@ -34,6 +34,7 @@ public class AppUpdateActivity extends AppCompatActivity {
             int icon = bundle1.getInt("com.appupdate.icon");
             String name = bundle1.getString("com.appupdate.name");
 
+            Log.d("AAAA", icon + "NNN" + name);
             Bundle bundle = this.getIntent().getExtras();
             String data = bundle.getString("res"); // NullPointerException.
             JSONObject jsonObject = new JSONObject(data);
@@ -62,7 +63,7 @@ public class AppUpdateActivity extends AppCompatActivity {
                 TextView txt_des = findViewById(R.id.txt_des);
                 TextView txt_no_thanks = findViewById(R.id.txt_no_thanks);
                 TextView btn_update = findViewById(R.id.btn_update);
-                if(icon == 0){
+                if(icon != 0){
                     img_icon.setImageResource(icon);
                 }
                 txt_title.setText(name + " " + getString(R.string.update_title));
