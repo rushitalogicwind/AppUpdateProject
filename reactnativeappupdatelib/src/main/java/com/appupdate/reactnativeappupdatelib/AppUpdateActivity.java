@@ -37,6 +37,7 @@ public class AppUpdateActivity extends AppCompatActivity {
             Bundle bundle = this.getIntent().getExtras();
             String data = bundle.getString("res"); // NullPointerException.
             JSONObject jsonObject = new JSONObject(data);
+            if(jsonObject.isNull(data)) {
             JSONObject updateData = jsonObject.getJSONObject("updateData");
             Boolean isAndroidForcedUpdate = updateData.getBoolean("isAndroidForcedUpdate");
             Boolean isAndroidUpdate = updateData.getBoolean("isAndroidUpdate");
@@ -61,7 +62,9 @@ public class AppUpdateActivity extends AppCompatActivity {
                 TextView txt_des = findViewById(R.id.txt_des);
                 TextView txt_no_thanks = findViewById(R.id.txt_no_thanks);
                 TextView btn_update = findViewById(R.id.btn_update);
-                img_icon.setImageResource(icon);
+                if(icon == 0){
+                    img_icon.setImageResource(icon);
+                }
                 txt_title.setText(name + " " + getString(R.string.update_title));
                 if(isAndroidForcedUpdate){
                     txt_no_thanks.setVisibility(View.GONE);
@@ -96,6 +99,7 @@ public class AppUpdateActivity extends AppCompatActivity {
             }
 
 //            alertDialog.show();
+            }
 
         } catch (JSONException | PackageManager.NameNotFoundException e) {
             e.printStackTrace();
