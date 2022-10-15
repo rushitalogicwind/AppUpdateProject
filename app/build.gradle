@@ -3,12 +3,13 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 30
 
     defaultConfig {
         applicationId "com.appupdate.appupdateproject"
         minSdk 21
-        targetSdk 33
+        //noinspection ExpiringTargetSdkVersion
+        targetSdk 30
         versionCode 1
         versionName "1.0"
 
