@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ import org.json.JSONObject;
 public class AppUpdateActivity extends AppCompatActivity {
 
     Boolean activityClose = false;
+    String TAG = "AppUpdateActivity";
 
     @SuppressLint("NewApi")
     @Override
@@ -31,10 +33,21 @@ public class AppUpdateActivity extends AppCompatActivity {
         try {
             ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle1 = ai.metaData;
-            int icon = bundle1.getInt("com.appupdate.icon");
-            String name = bundle1.getString("com.appupdate.name");
+            int icon = 0;
+            String name = "";
 
-            Log.d("AAAA", icon + "NNN" + name);
+            if(bundle1 != null){
+                 icon = bundle1.getInt("com.appupdate.icon");
+                 name = bundle1.getString("com.appupdate.name");
+                 if(name == "" || name == null){
+                     name = "Your";
+
+                 }
+            } else if(name == null || name == ""){
+                name = "Your";
+                icon = getResources().getIdentifier(String.valueOf(R.drawable.maintenance_icon), "drawable", this.getPackageName());
+            }
+
             Bundle bundle = this.getIntent().getExtras();
             String data = bundle.getString("res"); // NullPointerException.
             JSONObject jsonObject = new JSONObject(data);
