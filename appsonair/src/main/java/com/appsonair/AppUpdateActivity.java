@@ -35,8 +35,8 @@ public class AppUpdateActivity extends AppCompatActivity {
             String name = "";
 
             if(bundle1 != null){
-                 icon = bundle1.getInt("com.appupdate.icon");
-                 name = bundle1.getString("com.appupdate.name");
+                 icon = bundle1.getInt("com.appsonair.icon");
+                 name = bundle1.getString("com.appsonair.name");
                  if(name == "" || name == null){
                      name = "Your";
 

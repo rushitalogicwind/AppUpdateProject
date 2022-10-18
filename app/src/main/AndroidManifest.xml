@@ -20,10 +20,10 @@
         </activity>
 
         <meta-data
-            android:name="com.appupdate.icon"
+            android:name="com.appsonair.icon"
             android:resource="@drawable/maintenance_icon" />
         <meta-data
-            android:name="com.appupdate.name"
+            android:name="com.appsonair.name"
             android:value="@string/app_name" />
 
     </application>
