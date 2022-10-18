@@ -1,4 +1,4 @@
-package com.appupdate.reactnativeappupdatelib;
+package com.appsonair;
 
 
 public interface UpdateCallBack {

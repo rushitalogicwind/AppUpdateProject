@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.appupdate.reactnativeappupdatelib">
+    package="com.appsonair">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application>
         <activity
-            android:name=".MaintenanceActivity"
+            android:name="com.appsonair.MaintenanceActivity"
             android:exported="false" />
         <activity
-            android:name=".AppUpdateActivity"
+            android:name="com.appsonair.AppUpdateActivity"
             android:exported="false" />
     </application>
 

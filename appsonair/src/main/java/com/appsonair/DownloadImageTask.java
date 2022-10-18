@@ -1,4 +1,4 @@
-package com.appupdate.reactnativeappupdatelib;
+package com.appsonair;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

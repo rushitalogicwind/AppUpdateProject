@@ -9,4 +9,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "AppUpdateProject"
 include ':app'
-include ':reactnativeappupdatelib'
+include ':appsonair'
